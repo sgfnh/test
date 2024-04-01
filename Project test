@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <h3>Overall Ratings</h3>
+    *0<br>
+    **0<br>
+    ***0<br>
+    ****0<br>
+    *****0<br>
+    <br>
+    <br>
+    <br>
+    <form onsubmit="handleFormSubmit(event)">
+        <h3>Feedback Form</h3>
+        <label for="name">Enter Your Name:</label>
+        <input type="text" name="Enter You Name" id="name">
+        <lalel for="rating">Choose Rating:</lalel>
+        <select name="rating" id="rating">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <button>Submit</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <h3>ALL FEEDBACKS</h3>
+    <ul id="lis"></ul>
+    <script src="thj.js"></script>
+<script>
+function handleFormSubmit(event) {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const rating = event.target.rating.value;
+    
+    const user = {
+      name,
+      rating
+      
+    };
+    // Store the user details in local storage with the key "User Details"
+    localStorage.setItem(user.name, JSON.stringify(user));
+    showscreen(user);
+  }
+  
+  function showscreen(user) {
+    const parentele = document.getElementById("lis");
+    const childele = document.createElement('li');
+    childele.textContent = user.name + ' ' + user.rating;
+  
+    // Create delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', function() {
+      // Remove user from the user list
+      parentele.removeChild(childele);
+  
+      // Remove user details from local storage
+      localStorage.removeItem(user.name);
+    });
+  
+    // Append delete button to the list item
+    childele.appendChild(deleteButton);
+  
+    // Append list item to the parent element
+    parentele.appendChild(childele);
+    const editb=document.createElement('button');
+    editb.textContent='Edit';
+    editb.addEventListener('click',function(){
+        localStorage.removeItem(user.name);
+        parentele.removeChild(childele)
+        document.getElementById('name').value=user.name
+        document.getElementById('rating').value=user.rating
+    });
+    childele.appendChild(editb)
+    parentele.appendChild(childele)
+  }
+  </script>
+</body>
